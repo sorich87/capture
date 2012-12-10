@@ -2,7 +2,8 @@ var express = require('express')
   , app = express()
   , exec = require('child_process').exec
   , os = require('os')
-  , fs = require('fs');
+  , fs = require('fs')
+  , ratchet = require('ratchetio');
 
 app.use(express.bodyParser());
 
@@ -40,6 +41,10 @@ app.get('/', function (req, res) {
 app.all('*', function (req, res) {
   res.send(400);
 });
+
+if (process.env.RATCHET_TOKEN) {
+  app.use(ratchet.errorHandler(process.env.RATCHET_TOKEN));
+}
 
 app.listen(process.env.VCAP_APP_PORT || 3000);
 
