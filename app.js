@@ -6,6 +6,7 @@ var express = require('express')
   , ratchet = require('ratchetio');
 
 app.use(express.bodyParser());
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
   var url = req.query.url
